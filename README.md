@@ -14,9 +14,6 @@ HIWIN 雙臂機械手（A 臂 RA610 + B 臂 RA605，面對面對裝、相距 140
 > 給定兩臂各自的起點關節角與終點關節角，自動規劃出一條**兩臂互不碰撞**的關節空間軌跡，
 > 並包成 **MoveIt2 規劃器插件**，可直接在 `move_group` 裡當作 `planning_plugin` 使用。
 
-所有演算法核心都是從同一份 **MATLAB 原型**（`Dual_Arm_avoidance_system_v3` 外層 +
-不同版本的內層最佳化器）轉寫成 C++17 + Eigen3，數值行為已與 MATLAB 對照驗證一致。
-
 ---
 
 ## 2. Package 總覽
