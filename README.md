@@ -80,7 +80,6 @@ README 都特別註明「不可混用」。
 | **hiwin_ros2** | [github.com/HIWINCorporation/hiwin_ros2](https://github.com/HIWINCorporation/hiwin_ros2) | 官方 ROS 2 Humble 主力程式庫。提供 `ros2_control` 硬體介面（可對實體機器人做即時控制/監控）與 MoveIt2 整合（運動規劃、軌跡執行），底層基於 `hiwin_robot_client_library`，支援 RA6 / RS4 系列機器人，可切換模擬或實機連線。 |
 | **hiwin_robot_client_library** | [github.com/HIWINCorporation/hiwin_robot_client_library](https://github.com/HIWINCorporation/hiwin_robot_client_library) | 提供給開發者的簡化介面函式庫，封裝與 HIWIN 機器人控制器的底層通訊，供上層（如 `hiwin_ros2`）呼叫。 |
 | **hiwin_ros** | [github.com/HIWINCorporation/hiwin_ros](https://github.com/HIWINCorporation/hiwin_ros) | 舊版 ROS 1（含 Windows ROS）程式庫，用於控制/監控 HIWIN 機器人與電動夾爪，非 ROS 2 版本。 |
-| **hiwin_sdk** | [github.com/HIWINCorporation/hiwin_sdk](https://github.com/HIWINCorporation/hiwin_sdk) | 底層 SDK 程式庫，供控制/監控 HIWIN 機器人使用。 |
 
 > 本 workspace 的 6 個避障規劃器（`dual_arm_*_planner_1`）是自行開發的 MoveIt2
 > `planning_plugin`，用來取代/搭配官方 `hiwin_ros2` 中預設的 MoveIt2 規劃管線；
