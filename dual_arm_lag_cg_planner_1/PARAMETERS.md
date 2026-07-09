@@ -1,18 +1,18 @@
 # 參數對照表 — dual_arm_lag_cg_planner_1
 
-本文件列出所有參數：外部可調 vs 寫死、預設值、所在位置。
+本文件列出所有參數：外部可調 、預設值、所在位置。
 
 ---
 
 ## 一、yaml 可調參數（改 yaml 重啟 move_group 生效）
 
-### 1-1. 外層 / 平滑（與 ALM 共用語意）
+### 1-1. 外層 / 平滑
 
 | 參數 | 預設 | 說明 |
 |------|------|------|
 | `path_weight` | 0.5 | A/B 臂成本權重 `pw·fA+(1−pw)·fB` |
 | `danger_threshold` | 0.4 | 危險因子閾值 θ（判撞門檻 = 此值 + `collision_tolerance`）|
-| `collision_tolerance` | 0.1 | 碰撞判定緩衝帶 |
+| `collision_tolerance` | 0.1 | 碰撞判定緩衝帶 （此值＝ 判撞門檻 - 危險因子）|
 | `fix_tolerance` | 0.1 | `find_targets` 的 fix_gap 比例 |
 | `max_refinement_iter` | 15 | 外層修復最多輪數 |
 | `smooth_w` | **1.0** | 平滑項主權重 ⚠ Lagrangian 為 1.0（≠ ALM 的 0.3）|
