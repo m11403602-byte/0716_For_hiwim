@@ -18,9 +18,9 @@
 
 | 參數 | 預設 | 對應成員 | 說明 |
 |------|------|---------|------|
-| `path_weight` | 0.5 | path_weight_ | A/B 臂成本權重 `pw·fA + (1-pw)·fB`，[0,1] |
-| `danger_threshold` | 0.4 | danger_threshold_ |危險因子 |
-| `collision_tolerance` | 0.1 | collision_tolerance_ | 碰撞判定緩衝帶（此值 = 判撞門檻-危險因子）|
+| `path_weight` | 0.5 | A/B 手臂避障權重 `pw·fA+(1−pw)·fB` |
+| `danger_threshold` | 0.4 | 危險因子閾值 |
+| `collision_tolerance` | 0.1 | 碰撞判定緩衝帶 （此值＝ 判撞門檻（0.5） - 危險因子） |
 | `fix_tolerance` | 0.1 | fix_tolerance_ | find_targets 的 fix_gap 比例 |
 | `max_refinement_iter` | 15 | max_refinement_iter_ | 外層修復最多輪數 |
 | `smooth_w` | 0.3 | smooth_w_ | 平滑項主權重 |

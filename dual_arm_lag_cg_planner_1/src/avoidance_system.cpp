@@ -208,6 +208,7 @@ void AvoidanceSystem::check_collision(const Trajectory& traj,
 
   path_D_max = allD.rowwise().maxCoeff();   // (T) 每步 max
 
+  //因為碰撞是相切要>=0.5,所以要加上collision_tolerance_
   const double thr = danger_threshold_ + collision_tolerance_;   // 0.5
   is_collision = (path_D_max.array() >= thr).any();
 
