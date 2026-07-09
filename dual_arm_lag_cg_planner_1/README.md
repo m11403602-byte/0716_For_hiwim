@@ -4,11 +4,9 @@
 
 使用 C++17 + Eigen3 實作。
 
-⚠ **本包屬「純 Lagrangian 譜系」，與 ALM 譜系（`dual_arm_alm_*`）是不同的數學模型，不可混用。**
-
 ---
 
-## 數學模型（與 ALM 的核心差異）
+## 數學模型
 
 決策變數 **V = [X; λ; S] ∈ ℝ¹¹¹⁶**（λ、S 都是決策變數，非外層更新的乘子）：
 
@@ -30,14 +28,6 @@ G_S = 2 w_d · S ⊙ λ            (complementarity)
 
 ⚠ **收斂判定 = `phys_ok && stable_ok`（`stat_ok` 刻意停用）**：純 Lagrangian 對 λ 線性 → 鞍點，`‖G‖` 不會收斂到 0（λ 朝可行性漂移，而非 KKT stationarity）。故以「max_D ≤ θ + margin」+「max_D 穩定」為收斂依據。這是設計上的正確行為，非 bug。
 
-| | ALM 譜系 (`dual_arm_alm_*`) | 純 Lagrangian (本包) |
-|--|--|--|
-| 決策變數 | X (36 維) | [X; λ; S] (1116 維) |
-| 目標 | PHR 增廣 L (max(0,·)² 罰項) | L = f + w_d·λᵀ(D−θ+S²) |
-| 乘子 | μ 由外層 ALM 排程更新 | λ 是決策變數，靠梯度更新 |
-| 收斂 | 三條 KKT (v_pure/‖G‖/compl) | phys_ok && stable_ok |
-| 內層入口 | `run_alm()` | `run_newton()` |
-
 ---
 
 ## 架構：單一 .so
@@ -48,8 +38,6 @@ G_S = 2 w_d · S ⊙ λ            (complementarity)
 | `avoidance_system` | 第 2 層：外層碰撞修復迴圈 + Spline 重建 |
 | `data_io` | CSV 寫入工具 |
 | `planner_manager` | 第 3 層：MoveIt2 PlannerManager / PlanningContext |
-
-幾何層（FK / 包覆球 / `calc_df` / mask / `transmatrix`）與 ALM、Newton 譜系**位元一致**（同一套機器人模型）。
 
 ---
 
@@ -168,7 +156,7 @@ dual_arm_lag_cg_planner_1/
 | `CMakeLists.txt` | 建置設定：把 `src/` 下四個 .cpp 編進單一共享庫 `libdual_arm_lag_cg_planner_1.so`，並設定 `-O3 -DNDEBUG`（刻意不含 `-march=native`，見下「編譯選項」）；另外編出 `run_standalone` 執行檔。 |
 | `package.xml` | ROS 2 套件描述（ament_cmake），宣告對 `rclcpp` / `pluginlib` / `moveit_core` / `moveit_msgs` / `eigen` 的相依，並透過 `<moveit_core plugin=...>` 匯出插件描述檔給 pluginlib 讀取。 |
 | `dual_arm_lag_cg_planner_1.xml` | pluginlib 的插件描述 XML，宣告 `DualArmLagCgPlannerManager` 類別與其 `base_class_type`（`planning_interface::PlannerManager`），讓 MoveIt2 能動態載入本插件。 |
-| `README.md` | 本文件：數學模型、與 ALM 譜系的差異、架構、編譯、使用方式、CSV 匯出格式、部署前調整項目。 |
+| `README.md` | 本文件：數學模型、架構、編譯、使用方式、CSV 匯出格式、部署前調整項目。 |
 | `PARAMETERS.md` | 參數對照表：列出所有外部可調（yaml/命令列）與內部寫死的參數、預設值、所在原始碼位置。 |
 | `config/dual_arm_lag_cg_planner_1.yaml` | move_group 載入的規劃器參數：`path_weight`／`danger_threshold`、軌跡平滑權重、純 Lagrangian 內層參數（`lag_wd`／`lag_lam0`／`lag_s0`／`lag_tol_*`／`lag_max_iter`）、關節名前綴、時間參數化與 CSV 診斷輸出開關。 |
 | `include/.../cg_solver.hpp` + `src/cg_solver.cpp` | **第 1 層**：純 Lagrangian 內層優化器。實作 FK（`transmatrix`）、雙臂包覆球模型（`BubbleDef` / `BUBBLES_*` / `PEDESTAL_*`）、危險因子 `calc_df`，以及決策變數 `V=[X;λ;S]` 的共軛梯度（Fletcher-Reeves）求解：`d = -G + β·d_prev`（`β=‖G‖²/‖pre_G‖²`，首輪或 `‖pre_G‖<1e-9` 退回 `-G`）+ 1D Newton 線搜索求步長（`LS_DELTA=0.01`）。回傳的 `SolverLog` 記錄每步 L、f、maxD、KKT 殘差（stationarity/primal/complementarity）等收斂歷程。 |
