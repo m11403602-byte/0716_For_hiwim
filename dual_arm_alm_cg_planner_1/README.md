@@ -220,9 +220,8 @@ MoveIt 路徑由 yaml 的 `export_csv_prefix`（預設 `./alm_data`）與 `expor
 部署前請依實際機器人調整：
 
 1. **關節名**（`src/planner_manager.cpp` 的 `solve()`）：目前用 A 臂 `big_joint_1~6`、B 臂 `small_joint_1~6`，改成你 SRDF 的實際關節名。
-2. **planning group**：solve 用 `req.group_name`，確認 SRDF 的 group 設定。
-3. **機器人底座**（`avoidance_system.cpp` 建構函數）：目前 A 臂 `Ty(700)Rz(180)`、B 臂 `Ty(-700)`，兩臂相距 1400mm 面對面 — 依實際擺位調整。
-4. **包覆球參數**（`cg_solver.cpp` 的 `BUBBLES_*` / `PEDESTAL_*` 常數）：RA610/RA605 的球座標與半徑，依實際機型確認。
+2. **機器人底座**（`avoidance_system.cpp` 建構函數）：目前 A 臂 `Ty(700)Rz(180)`、B 臂 `Ty(-700)`，兩臂相距 1400mm 面對面 — 依實際擺位調整。
+3. **包覆球參數**（`cg_solver.cpp` 的 `BUBBLES_*` / `PEDESTAL_*` 常數）：RA610/RA605 的球座標與半徑，依實際機型確認。
 
 ---
 
