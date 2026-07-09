@@ -165,4 +165,3 @@
 | 改 λ/S 初值 | `lag_lam0` / `lag_s0` | ✅ yaml |
 | 改收斂容差 | `lag_tol_phys_margin` / `lag_tol_stable` | ✅ yaml |
 | 改主迴圈上限 | `lag_max_iter` | ✅ yaml |
-| 改線搜索 / 危險因子 / 幾何 | — | ✗ `cg_solver.cpp` 重編 |
