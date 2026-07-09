@@ -10,7 +10,7 @@
 
 | 參數 | 預設 | 說明 |
 |------|------|------|
-| `path_weight` | 0.5 | A/B 臂成本權重 `pw·fA+(1−pw)·fB` |
+| `path_weight` | 0.5 | A/B 手臂避障權重 `pw·fA+(1−pw)·fB` |
 | `danger_threshold` | 0.4 | 危險因子閾值 θ|
 | `collision_tolerance` | 0.1 | 碰撞判定緩衝帶 （此值＝ 判撞門檻（0.5） - 危險因子）|
 | `fix_tolerance` | 0.1 | `find_targets` 的 fix_gap 比例 |
@@ -25,7 +25,7 @@
 | `path_total_time` | 5.0 | （time_optimal=false）目標總時間（秒）|
 | `min_time_interval` | 0.05 | （time_optimal=false）每點最小間隔（秒）|
 
-### 1-2. 純 Lagrangian 參數 [NEW]（取代 ALM 的 `alm_*`）
+### 1-2. 純 Lagrangian 參數 [NEW]
 
 | 參數 | 預設 | 說明 |
 |------|------|------|

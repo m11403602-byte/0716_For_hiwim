@@ -165,6 +165,27 @@ dual_arm_lag_gd_planner_1/
 
 ---
 
+## 執行順序（.cpp 呼叫順序）與參數查找方法
+
+MoveIt2 插件路徑下，四支 .cpp 的實際呼叫順序如下：
+
+1. **`planner_manager.cpp`**（`DualArmPlanningContext::solve()`）— 讀取 yaml 參數，建構 `AvoidanceSystem` 並傳入。
+2. **`avoidance_system.cpp`**（`AvoidanceSystem::run_optimization()`）— 外層碰撞修復迴圈；找到危險段後建構 `GdSolver` 並呼叫 `run_newton()`。
+3. **`gd_solver.cpp`**（`GdSolver::run_newton()`）— 內層純 Lagrangian 最陡下降優化迭代，各參數在這裡被實際用於計算（例如 `danger_threshold_` 用在約束項 `D_i(X) - danger_threshold_ + s_i²`）。
+4. **`data_io.cpp`**（`write_csv` / `write_csv_labeled`）— 只負責把 `SolverLog` / `Trajectory` 寫成 CSV，不含任何決策參數。
+
+standalone 模式（`standalone/run_standalone.cpp`）呼叫順序相同，只是省略第 1 步（不經 MoveIt/yaml，waypoints 與參數直接寫死在 `main()` 呼叫 `AvoidanceSystem` 建構子）。
+
+**查參數意義的方法**：先在 [PARAMETERS.md](PARAMETERS.md) 找到參數對應的成員變數名（如 `danger_threshold_`），再依上面 1→2→3 的順序，用該成員名稱在對應檔案中搜尋（`grep -rn "danger_threshold_" src/`）：
+
+- 在 `planner_manager.cpp` 看到它從 yaml 讀入、傳給 `AvoidanceSystem` 建構子。
+- 在 `avoidance_system.cpp` 看到它被存成成員、傳給 `GdSolver` 建構子，並在 `run_optimization()` 用來跟 `max_D` 比較判斷是否碰撞。
+- 在 `gd_solver.cpp` 看到它被用在約束項 `D_i(X) - danger_threshold_ + s_i²`。
+
+照著「讀入 → 傳遞 → 實際使用」這個順序看下去，就能看到一個參數從 yaml 到影響哪段數學式的完整路徑。
+
+---
+
 ## 編譯
 
 ```bash
