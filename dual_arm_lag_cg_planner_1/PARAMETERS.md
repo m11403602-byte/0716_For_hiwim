@@ -15,7 +15,7 @@
 | `collision_tolerance` | 0.1 | 碰撞判定緩衝帶 （此值＝ 判撞門檻（0.5） - 危險因子） |
 | `fix_tolerance` | 0.1 | `find_targets` 的 fix_gap 比例 |
 | `max_refinement_iter` | 15 | 外層修復最多輪數 |
-| `smooth_w` | **1.0** | 平滑項主權重 ⚠ Lagrangian 為 1.0（≠ ALM 的 0.3）|
+| `smooth_w` | **1.0** | 平滑項主權重 ⚠ Lagrangian 為 1.0|
 | `smooth_w_H` | 1.0 | Head 端權重 |
 | `smooth_w_T` | 1.0 | Tail 端權重 |
 | `smooth_w_neighbor` | 1.0 | 鄰點權重 |
@@ -76,7 +76,7 @@
 | robotA_base | `Ty(700)·Rz(180°)` | A 臂底座 |
 | robotB_base | `Ty(-700)·Rz(0°)` | B 臂底座（兩臂相距 1400mm 面對面）|
 
-### 2-4. 機器人幾何（`cg_solver.cpp`，與 ALM/Newton 譜系位元一致）
+### 2-4. 機器人幾何（`cg_solver.cpp`）
 
 | 項目 | 內容 |
 |------|------|
