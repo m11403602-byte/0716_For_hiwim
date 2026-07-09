@@ -24,9 +24,9 @@ G_λ = w_d · (D − θ + S²)        (primal feasibility)
 G_S = 2 w_d · S ⊙ λ            (complementarity)
 ```
 
-內層 = **共軛梯度（Fletcher-Reeves）** `d = −G + β·d_prev`（β=‖G‖²/‖pre_G‖²；首輪或 ‖pre_G‖<1e-9 退回 −G）+ **1D Newton 線搜索**（`LS_DELTA=0.01`）。⚠ Con_v2 的非下降 restart 為註解狀態，本港比照不啟用。
+內層 = **共軛梯度（Fletcher-Reeves）** `d = −G + β·d_prev`（β=‖G‖²/‖pre_G‖²；首輪或 ‖pre_G‖<1e-9 退回 −G）+ **1D Newton 線搜索**（`LS_DELTA=0.01`）。
 
-⚠ **收斂判定 = `phys_ok && stable_ok`（`stat_ok` 刻意停用）**：純 Lagrangian 對 λ 線性 → 鞍點，`‖G‖` 不會收斂到 0（λ 朝可行性漂移，而非 KKT stationarity）。故以「max_D ≤ θ + margin」+「max_D 穩定」為收斂依據。這是設計上的正確行為，非 bug。
+⚠ **收斂判定 = `phys_ok && stable_ok`（`stat_ok` 刻意停用）**：純 Lagrangian 對 λ 線性 → 鞍點，`‖G‖` 不會收斂到 0（λ 朝可行性漂移，而非 KKT stationarity）。故以「max_D ≤ θ + margin」+「max_D 穩定」為收斂依據。
 
 ---
 

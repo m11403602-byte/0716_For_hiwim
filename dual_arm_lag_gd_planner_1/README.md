@@ -26,7 +26,7 @@ G_S = 2 w_d · S ⊙ λ            (complementarity)
 
 內層 = **最陡下降** `d = −G` + **1D Newton 線搜索**（`LS_DELTA=0.01`）。
 
-⚠ **收斂判定 = `phys_ok && stable_ok`（`stat_ok` 刻意停用）**：純 Lagrangian 對 λ 線性 → 鞍點，`‖G‖` 不會收斂到 0（λ 朝可行性漂移，而非 KKT stationarity）。故以「max_D ≤ θ + margin」+「max_D 穩定」為收斂依據。這是設計上的正確行為，非 bug。
+⚠ **收斂判定 = `phys_ok && stable_ok`（`stat_ok` 刻意停用）**：純 Lagrangian 對 λ 線性 → 鞍點，`‖G‖` 不會收斂到 0（λ 朝可行性漂移，而非 KKT stationarity）。故以「max_D ≤ θ + margin」+「max_D 穩定」為收斂依據。
 
 ---
 
