@@ -53,7 +53,7 @@ G_S = 2 w_d · S ⊙ λ            (complementarity)
 │ 逐步計算危險因子 D_m = calc_df(...) → max_D(t)                       │
 │        │                                                            │
 │        ▼                                                            │
-│ max_D(t) > danger_threshold (0.4) ?  ──否──▶ 完成 (has_collision=false)│
+│ max_D(t) > ＝ 碰撞門檻 (0.5) 代表碰撞持續優化 ?  ──否──▶ 完成 (has_collision=false)│
 │        │是                                                           │
 │        ▼                                                            │
 │ find_collision_targets(): 取危險段 5 個控制點                        │
